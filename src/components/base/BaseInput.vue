@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div class="base-input"></div>
+</template>
 
 <script setup></script>
 

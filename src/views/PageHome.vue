@@ -1,15 +1,24 @@
 <template>
   <div class="page">
     <div class="page__content-wrapper">
-      <div class="products">
+      <div
+        v-if="filteredProducts.length > 0"
+        class="products"
+      >
         <div
-          v-for="product in products"
+          v-for="product in filteredProducts"
           :key="product.id"
         >
           <product-card :product="product"></product-card>
         </div>
       </div>
-      <products-filter :brands="brands"></products-filter>
+      <div v-else>Nothing to show</div>
+      <products-filter
+        :brands="brands"
+        @filter-brand="filterBrand"
+        @filter-category="filterCategory"
+        @filter-search="filterSearch"
+      ></products-filter>
     </div>
   </div>
 </template>
@@ -21,11 +30,13 @@
   import ProductsFilter from '@/components/ProductsFilter.vue';
 
   const products = ref([]);
+  const filteredProducts = ref([]);
 
   const getProducts = async () => {
     try {
       products.value = (await getAllProducts()).data.products;
       brands.value = [...new Set(products.value.map((el) => el.brand))];
+      filteredProducts.value = products.value;
     } catch (e) {
       console.log(e);
     }
@@ -34,14 +45,26 @@
   const brands = ref([]);
 
   getProducts();
+
+  const filterBrand = (brand) => {
+    filteredProducts.value = brand === 'all' ? products.value : products.value.filter((product) => product.brand === brand);
+  };
+
+  const filterCategory = (category) => {
+    filteredProducts.value = category === 'all' ? products.value : products.value.filter((product) => product.category === category);
+  };
+
+  const filterSearch = (search) => {
+    filteredProducts.value = search === '' ? products.value : products.value.filter((product) => product.title.toLowerCase().includes(search.toLowerCase()));
+  };
 </script>
 
 <style lang="scss" scoped>
   .page {
     &__content-wrapper {
       display: grid;
-      grid-template-columns: 1fr 300px;
-      grid-gap: 30px;
+      grid-template-columns: 1fr auto;
+      grid-gap: 60px;
     }
   }
   .products {

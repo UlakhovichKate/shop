@@ -10,6 +10,7 @@
         <h2 class="card__title">
           <a :href="`/products/` + product.id">{{ product.title }}</a>
         </h2>
+        <div class="card__brand">by {{ product.brand }}</div>
         <div class="card__price">{{ product.price }} $</div>
       </div>
     </div>
@@ -54,7 +55,7 @@
     }
 
     &__title {
-      margin: 0 0 20px;
+      margin: 0;
       font-size: 18px;
 
       a {
@@ -65,6 +66,11 @@
           color: green;
         }
       }
+    }
+
+    &__brand {
+      margin-bottom: 20px;
+      font-size: 12px;
     }
 
     &__footer {

@@ -6,9 +6,7 @@
       @change="$emit('update:selected', $event.target.value)"
       class="base-filter__select"
     >
-      <option 
-        disabled 
-        value="">Select a {{ name }}</option>
+      <option value="all">All</option>
       <option
         v-for="(element, index) in elements"
         :key="index"
@@ -32,24 +30,24 @@
       required: true,
     },
     selected: {
-        type: String,
-        default: '',
-    }
+      type: String,
+      default: 'all',
+    },
   });
 
-defineEmits(['update:selected'])
+  defineEmits(['update:selected']);
 
   const elements = computed(() => props.elements);
 </script>
 
 <style lang="scss" scoped>
-.base-filter {
+  .base-filter {
     margin-bottom: 40px;
 
     &__select {
-        width: 100%;
-        padding: 5px;
-        font-size: 16px
+      width: 100%;
+      padding: 5px;
+      font-size: 16px;
     }
-}
+  }
 </style>

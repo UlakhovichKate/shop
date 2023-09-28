@@ -10,15 +10,18 @@
       :elements="brands"
       name="brand"
     ></base-filter>
-
-    {{ filterCategory }} {{ filterBrand }}
+    <base-search
+      v-model:search="filterSearch"
+      name="title"
+    ></base-search>
   </div>
 </template>
 
 <script setup>
   import BaseFilter from '@/components/base/BaseFilter.vue';
+  import BaseSearch from '@/components/base/BaseSearch.vue';
   import {getAllCategories} from '@/api/apiProducts';
-  import {ref, computed} from 'vue';
+  import {ref, computed, watch} from 'vue';
 
   const props = defineProps({
     brands: {
@@ -26,6 +29,8 @@
       required: true,
     },
   });
+
+  const emit = defineEmits(['filterBrand', 'filterCategory', 'filterSearch']);
 
   const categories = ref([]);
 
@@ -41,8 +46,27 @@
 
   const brands = computed(() => props.brands);
 
-  const filterCategory = ref(null);
-  const filterBrand = ref(null);
+  const filterCategory = ref('all');
+  const filterBrand = ref('all');
+
+  watch(filterCategory, (selectedCategory) => {
+    emit('filterCategory', selectedCategory);
+  });
+
+  watch(filterBrand, (selectedBrand) => {
+    emit('filterBrand', selectedBrand);
+  });
+
+  const filterSearch = ref('');
+
+  watch(filterSearch, (searchInput) => {
+    emit('filterSearch', searchInput);
+  });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .filter {
+    max-width: 260px;
+    width: 100%;
+  }
+</style>
