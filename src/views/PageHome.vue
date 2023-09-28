@@ -36,7 +36,7 @@
   .page {
     &__content-wrapper {
       display: grid;
-      grid-template-columns: 1fr 400px;
+      grid-template-columns: 1fr 300px;
       grid-gap: 30px;
     }
   }
