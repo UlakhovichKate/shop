@@ -9,7 +9,7 @@
           <product-card :product="product"></product-card>
         </div>
       </div>
-      <div class="filter">Filters</div>
+      <products-filter :brands="brands"></products-filter>
     </div>
   </div>
 </template>
@@ -18,16 +18,20 @@
   import {ref} from 'vue';
   import {getAllProducts} from '@/api/apiProducts';
   import ProductCard from '@/components/ProductCard.vue';
+  import ProductsFilter from '@/components/ProductsFilter.vue';
 
   const products = ref([]);
 
   const getProducts = async () => {
     try {
       products.value = (await getAllProducts()).data.products;
+      brands.value = [...new Set(products.value.map((el) => el.brand))];
     } catch (e) {
       console.log(e);
     }
   };
+
+  const brands = ref([]);
 
   getProducts();
 </script>

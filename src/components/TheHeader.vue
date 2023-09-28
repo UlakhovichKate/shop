@@ -3,7 +3,12 @@
     <div class="header__content-wrapper">
       <h1 class="header__title"><a href="/">Shop</a></h1>
       <div class="header__nav">
-        <button class="header__basket"><img alt="cart" :src="shoppingCart" /></button>
+        <button class="header__basket">
+          <img
+            alt="cart"
+            :src="shoppingCart"
+          />
+        </button>
         <div class="header__user">User</div>
         <button class="header__logout">Log out</button>
       </div>
@@ -12,7 +17,7 @@
 </template>
 
 <script setup>
-import shoppingCart from "@/assets/shopping-cart-01.svg";
+  import shoppingCart from '@/assets/shopping-cart-01.svg';
 </script>
 
 <style lang="scss" scoped>
@@ -58,7 +63,7 @@ import shoppingCart from "@/assets/shopping-cart-01.svg";
       cursor: pointer;
 
       &:hover {
-        opacity: .7;
+        opacity: 0.7;
       }
     }
 
@@ -68,7 +73,7 @@ import shoppingCart from "@/assets/shopping-cart-01.svg";
       color: #000;
       padding: 10px 20px;
       cursor: pointer;
-      transition: all .5s;
+      transition: all 0.5s;
       border-radius: 5px;
 
       &:hover {
