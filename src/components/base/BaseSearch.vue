@@ -26,6 +26,8 @@
 
 <style lang="scss" scoped>
   .base-search {
+    margin-bottom: 40px;
+
     &__input {
       width: 100%;
       padding: 5px;

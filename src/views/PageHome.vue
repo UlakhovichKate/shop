@@ -15,6 +15,8 @@
       <div v-else>Nothing to show</div>
       <products-filter
         :brands="brands"
+        :min-price="minPrice"
+        :max-price="maxPrice"
         @filter-brand="filterBrand"
         @filter-category="filterCategory"
         @filter-search="filterSearch"
@@ -31,12 +33,16 @@
 
   const products = ref([]);
   const filteredProducts = ref([]);
+  const minPrice = ref(0);
+  const maxPrice = ref(0);
 
   const getProducts = async () => {
     try {
       products.value = (await getAllProducts()).data.products;
       brands.value = [...new Set(products.value.map((el) => el.brand))];
       filteredProducts.value = products.value;
+      minPrice.value = getMinimumPrice();
+      maxPrice.value = getMaximumPrice();
     } catch (e) {
       console.log(e);
     }
@@ -57,6 +63,13 @@
   const filterSearch = (search) => {
     filteredProducts.value = search === '' ? products.value : products.value.filter((product) => product.title.toLowerCase().includes(search.toLowerCase()));
   };
+
+  const getMinimumPrice = () => {
+    return products.value.reduce((min, p) => p.price < min ? p.price : min, products.value[0].price);
+  };
+  const getMaximumPrice = () => {
+    return products.value.reduce((max, p) => p.price > max ? p.price : max, products.value[0].price);
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -65,6 +78,10 @@
       display: grid;
       grid-template-columns: 1fr auto;
       grid-gap: 60px;
+
+      @media (max-width: 991px) {
+        grid-template-columns: 1fr;
+      }
     }
   }
   .products {
@@ -78,6 +95,7 @@
 
     @media (max-width: 991px) {
       grid-template-columns: repeat(2, 1fr);
+      order: 2;
     }
 
     @media (max-width: 500px) {
