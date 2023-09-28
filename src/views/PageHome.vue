@@ -65,10 +65,10 @@
   };
 
   const getMinimumPrice = () => {
-    return products.value.reduce((min, p) => p.price < min ? p.price : min, products.value[0].price);
+    return products.value.reduce((min, p) => (p.price < min ? p.price : min), products.value[0].price);
   };
   const getMaximumPrice = () => {
-    return products.value.reduce((max, p) => p.price > max ? p.price : max, products.value[0].price);
+    return products.value.reduce((max, p) => (p.price > max ? p.price : max), products.value[0].price);
   };
 </script>
 

@@ -1,32 +1,34 @@
 <template>
   <div class="filter">
-    <base-filter
-      v-model:selected="filterCategory"
-      :elements="categories"
-      name="category"
-    ></base-filter>
-    <base-filter
-      v-model:selected="filterBrand"
-      :elements="brands"
-      name="brand"
-    ></base-filter>
-    <base-search
-      v-model:search="filterSearch"
-      name="title"
-    ></base-search>
-    <div class="filter__price">
-      <h3 class="filter__price-title">Filter by price</h3>
-      <div class="filter__price-grid">
-        <base-input
-        v-model:value="minPrice"
-        type="min"
-        title="Minimum price"
-      ></base-input>
-      <base-input
-        v-model:value="maxPrice"
-        type="max"
-        title="Maximum price"
-      ></base-input>
+    <div class="filter__inner">
+      <base-filter
+        v-model:selected="filterCategory"
+        :elements="categories"
+        name="category"
+      ></base-filter>
+      <base-filter
+        v-model:selected="filterBrand"
+        :elements="brands"
+        name="brand"
+      ></base-filter>
+      <base-search
+        v-model:search="filterSearch"
+        name="title"
+      ></base-search>
+      <div class="filter__price">
+        <h3 class="filter__price-title">Filter by price</h3>
+        <div class="filter__price-grid">
+          <base-input
+            v-model:value="minPrice"
+            type="min"
+            title="Minimum price"
+          ></base-input>
+          <base-input
+            v-model:value="maxPrice"
+            type="max"
+            title="Maximum price"
+          ></base-input>
+        </div>
       </div>
     </div>
   </div>
@@ -51,7 +53,7 @@
     maxPrice: {
       type: Number,
       required: true,
-    }
+    },
   });
 
   const emit = defineEmits(['filterBrand', 'filterCategory', 'filterSearch']);
@@ -94,6 +96,11 @@
   .filter {
     max-width: 260px;
     width: 100%;
+
+    &__inner {
+      position: sticky;
+      top: 50px;
+    }
 
     &__price-title {
       margin: 0;
