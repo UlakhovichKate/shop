@@ -30,6 +30,12 @@
           ></base-input>
         </div>
       </div>
+      <button
+        @click="resetFilters"
+        class="filter__reset"
+      >
+        Reset all filters
+      </button>
     </div>
   </div>
 </template>
@@ -40,23 +46,26 @@
   import BaseInput from '@/components/base/BaseInput.vue';
   import {getAllCategories} from '@/api/apiProducts';
   import {ref, computed, watch} from 'vue';
+  import {useFiltersStore} from '@/store/filters';
+
+  const filtersStore = useFiltersStore();
 
   const props = defineProps({
     brands: {
       type: Object,
       required: true,
     },
-    minPrice: {
-      type: Number,
-      required: true,
-    },
-    maxPrice: {
-      type: Number,
-      required: true,
-    },
+    // minPrice: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // maxPrice: {
+    //   type: Number,
+    //   required: true,
+    // },
   });
 
-  const emit = defineEmits(['filterBrand', 'filterCategory', 'filterSearch']);
+  const emit = defineEmits(['filterBrand', 'filterCategory', 'filterSearch', 'resetFilters']);
 
   const categories = ref([]);
 
@@ -88,8 +97,15 @@
     emit('filterSearch', searchInput);
   });
 
-  const minPrice = computed(() => props.minPrice);
-  const maxPrice = computed(() => props.maxPrice);
+  const minPrice = filtersStore.filterMinPrice;
+  const maxPrice = filtersStore.filterMaxPrice;
+
+  const resetFilters = () => {
+    filterCategory.value = 'all';
+    filterBrand.value = 'all';
+    filterSearch.value = '';
+    emit('resetFilters');
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -109,6 +125,22 @@
     &__price-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__reset {
+      margin-top: 50px;
+      padding: 10px 20px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      background: #fff;
+      color: #000;
+      font-size: 16px;
+      transition: all 0.5s;
+      cursor: pointer;
+
+      &:hover {
+        background: #ccc;
+      }
     }
   }
 </style>
