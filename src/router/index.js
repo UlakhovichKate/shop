@@ -15,11 +15,6 @@ const routes = [
         name: 'productPage',
         component: () => import('../views/PageProduct.vue'),
       },
-      {
-        path: ':pathMatch(.*)*',
-        name: 'notFoundPage',
-        component: () => import('../views/PageNotFound.vue'),
-      },
     ],
   },
   {
@@ -30,6 +25,17 @@ const routes = [
         path: '',
         name: 'loginPage',
         component: () => import('../views/PageLogin.vue'),
+      },
+    ],
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../layouts/LayoutEmpty.vue'),
+    children: [
+      {
+        path: '',
+        name: 'notFoundPage',
+        component: () => import('../views/PageNotFound.vue'),
       },
     ],
   },

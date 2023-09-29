@@ -23,7 +23,7 @@
 <style lang="scss" scoped>
   .header {
     padding: 20px;
-    box-shadow: 0px 2px 11px 0px rgb(222 222 222 / 50%);
+    box-shadow: 0 2px 11px 0 rgb(222 222 222 / 50%);
     background-color: #fff;
 
     &__content-wrapper {
@@ -40,7 +40,6 @@
     }
 
     &__nav {
-      display: grid;
       display: flex;
       justify-content: space-between;
       align-items: center;

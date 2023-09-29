@@ -5,39 +5,37 @@
         v-if="filteredProducts.length > 0"
         class="products"
       >
+        {{ minPrice }} {{ maxPrice }}
         <div
           v-for="product in filteredProducts"
           :key="product.id"
         >
-          <product-card :product="product"></product-card>
+          <product-card :product="product" />
         </div>
       </div>
       <div v-else>Nothing to show</div>
       <products-filter
         :brands="brands"
-        :min-price="minPrice"
-        :max-price="maxPrice"
+        :categories="categories"
+        v-model:min-price="minPrice"
+        v-model:max-price="maxPrice"
         @filter-brand="filterBrand"
         @filter-category="filterCategory"
         @filter-search="filterSearch"
         @reset-filters="resetFilters"
-      ></products-filter>
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-  import {ref} from 'vue';
+  import {ref, watch} from 'vue';
   import {getAllProducts} from '@/api/apiProducts';
-  import ProductCard from '@/components/ProductCard.vue';
-  import ProductsFilter from '@/components/ProductsFilter.vue';
-  import {useFiltersStore} from '@/store/filters';
+  import ProductCard from '@/components/products/ProductsCard.vue';
+  import ProductsFilter from '@/components/products/ProductsFilter.vue';
 
   const products = ref([]);
   const filteredProducts = ref([]);
-  const filtersStore = useFiltersStore();
-  const filterMinPrice = filtersStore.filterMinPrice;
-  const filterMaxPrice = filtersStore.filterMaxPrice;
 
   const minPrice = ref(0);
   const maxPrice = ref(0);
@@ -46,15 +44,17 @@
     try {
       products.value = (await getAllProducts()).data.products;
       brands.value = [...new Set(products.value.map((el) => el.brand))];
+      categories.value = [...new Set(products.value.map((el) => el.category))];
       filteredProducts.value = products.value;
-      filtersStore.filterMinPrice = getMinimumPrice();
-      filtersStore.filterMaxPrice = getMaximumPrice();
+      minPrice.value = getMinimumPrice();
+      maxPrice.value = getMaximumPrice();
     } catch (e) {
       console.log(e);
     }
   };
 
   const brands = ref([]);
+  const categories = ref([]);
 
   getProducts();
 
@@ -73,19 +73,6 @@
     const brand = filteredBrandProducts.value;
     const search = filteredSearchProducts.value;
     console.log(category, brand, search);
-    console.log(filterMinPrice, filterMaxPrice);
-
-    // if (category !== 'all' && brand !== 'all' && search !== '') {
-    //   filteredProducts.value = products.value.filter((product) => product.brand === brand && product.category === category && product.title.toLowerCase().includes(search.toLowerCase()));
-    // } else if (category !== 'all' && brand !== 'all' && search === '') {
-    //   filteredProducts.value = products.value.filter((product) => product.brand === brand && product.category === category);
-    // } else if (category === 'all' && brand !== 'all' && search === '') {
-    //   filteredProducts.value = products.value.filter((product) => product.brand === brand);
-    // } else if (category !== 'all' && brand === 'all' && search === '') {
-    //   filteredProducts.value = products.value.filter((product) => product.category === category);
-    // } else if (category === 'all' && brand === 'all' && search !== '') {
-    //   filteredProducts.value = products.value.filter((product) => product.title.toLowerCase().includes(search.toLowerCase()));
-    // }
 
     if (category === 'all') {
       if (brand === 'all') {
@@ -126,10 +113,6 @@
     }
   };
 
-  // watch(filterCategory, (category) => {
-  //   filteredProducts.value = category === 'all' ? products.value : products.value.filter((product) => product.category === category);
-  // });
-
   const filterCategory = (category) => {
     filteredCategoryProducts.value = category;
     //filteredProducts.value = category === 'all' ? products.value : products.value.filter((product) => product.category === category);
@@ -152,6 +135,14 @@
   const resetFilters = () => {
     filteredProducts.value = products.value;
   };
+
+  watch(minPrice, (price) => {
+    console.log(price);
+  });
+
+  watch(maxPrice, (price) => {
+    console.log(price);
+  });
 </script>
 
 <style lang="scss" scoped>

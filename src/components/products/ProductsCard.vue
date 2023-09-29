@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="card__footer">
-      <button class="card__btn">Add to cart</button>
+      <button class="card__button">Add to cart</button>
     </div>
   </div>
 </template>
@@ -77,7 +77,7 @@
       padding: 20px;
     }
 
-    &__btn {
+    &__button {
       padding: 10px 20px;
       border: 1px solid #000;
       background-color: #000;

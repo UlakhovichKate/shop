@@ -9,19 +9,19 @@
           />
         </div>
         <div class="product__info">
-          <h2 class="page__title">{{ product.title }}</h2>
+          <h2 class="product__title">{{ product.title }}</h2>
           <div class="product__price">{{ product.price }} $</div>
           <div class="product__description">{{ product.description }}</div>
           <div class="product__brand">Brand: {{ product.brand }}</div>
           <div class="product__category">Category: {{ product.category }}</div>
           <div class="product__rating">Rating: {{ product.rating }}</div>
-          <div class="product__awailability">
+          <div class="product__availability">
             <span v-if="product.stock > 0">In stock</span>
             <span v-else>Not in stock</span>
           </div>
           <button
             v-if="product.stock > 0"
-            class="product__btn"
+            class="product__button"
           >
             Add to cart
           </button>
@@ -36,8 +36,9 @@
   import {getProduct} from '@/api/apiProducts';
   import {useRoute} from 'vue-router';
 
-  const product = ref([]);
   const route = useRoute();
+
+  const product = ref([]);
 
   const getOneProduct = async () => {
     try {
@@ -70,7 +71,7 @@
       margin: 20px 0;
     }
 
-    &__btn {
+    &__button {
       margin-top: 20px;
       padding: 10px 20px;
       border: 1px solid #000;

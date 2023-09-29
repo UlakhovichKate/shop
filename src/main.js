@@ -7,5 +7,6 @@ import App from './App.vue';
 import router from './router';
 
 const app = createApp(App);
+const pinia = createPinia();
 
-app.use(createPinia()).use(router).mount('#app');
+app.use(pinia).use(router).mount('#app');
