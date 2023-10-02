@@ -5,7 +5,6 @@
         v-if="filteredProducts.length > 0"
         class="products"
       >
-        {{ minPrice }} {{ maxPrice }}
         <div
           v-for="product in filteredProducts"
           :key="product.id"
@@ -62,66 +61,36 @@
   const filteredCategoryProducts = ref('all');
   const filteredSearchProducts = ref('');
 
-  const filterBrand = (brand) => {
-    filteredBrandProducts.value = brand;
-    //filteredProducts.value = brand === 'all' ? products.value : products.value.filter((product) => product.brand === brand);
-    filterProducts();
-  };
-
   const filterProducts = () => {
-    const category = filteredCategoryProducts.value;
-    const brand = filteredBrandProducts.value;
+    const category = filteredCategoryProducts.value === 'all' ? '' : filteredCategoryProducts.value;
+    const brand = filteredBrandProducts.value === 'all' ? '' : filteredBrandProducts.value;
     const search = filteredSearchProducts.value;
-    console.log(category, brand, search);
+    const min = minPrice.value;
+    const max = maxPrice.value;
+    const regexp = `A-Za-z0-9_-/`;
 
-    if (category === 'all') {
-      if (brand === 'all') {
-        if (search === '') {
-          console.log(1);
-          filteredProducts.value = products.value;
-        } else {
-          console.log(2);
-          filteredProducts.value = products.value.filter((product) => product.title.toLowerCase().includes(search.toLowerCase()));
-        }
-      } else {
-        if (search === '') {
-          console.log(3);
-          filteredProducts.value = products.value.filter((product) => product.brand === brand);
-        } else {
-          console.log(4);
-          filteredProducts.value = products.value.filter((product) => product.brand === brand && product.title.toLowerCase().includes(search.toLowerCase()));
-        }
-      }
-    } else {
-      if (brand === 'all') {
-        if (search === '') {
-          console.log(5);
-          filteredProducts.value = products.value.filter((product) => product.category === category);
-        } else {
-          console.log(6);
-          filteredProducts.value = products.value.filter((product) => product.category === category && product.title.toLowerCase().includes(search.toLowerCase()));
-        }
-      } else {
-        if (search === '') {
-          console.log(7);
-          filteredProducts.value = products.value.filter((product) => product.brand === brand && product.category === category);
-        } else {
-          console.log(8);
-          filteredProducts.value = products.value.filter((product) => product.brand === brand && product.category === category && product.title.toLowerCase().includes(search.toLowerCase()));
-        }
-      }
-    }
+    filteredProducts.value = products.value.filter(
+      (product) =>
+        (brand ? product.brand === brand : product.brand.matchAll(regexp)) &&
+        (category ? product.category === category : product.category.matchAll(regexp)) &&
+        product.title.toLowerCase().includes(search.toLowerCase()) &&
+        product.price >= min &&
+        product.price <= max,
+    );
   };
 
   const filterCategory = (category) => {
     filteredCategoryProducts.value = category;
-    //filteredProducts.value = category === 'all' ? products.value : products.value.filter((product) => product.category === category);
+    filterProducts();
+  };
+
+  const filterBrand = (brand) => {
+    filteredBrandProducts.value = brand;
     filterProducts();
   };
 
   const filterSearch = (search) => {
     filteredSearchProducts.value = search;
-    //filteredProducts.value = search === '' ? products.value : products.value.value.filter((product) => product.title.toLowerCase().includes(search.toLowerCase()));
     filterProducts();
   };
 
@@ -134,14 +103,19 @@
 
   const resetFilters = () => {
     filteredProducts.value = products.value;
+    filteredBrandProducts.value = 'all';
+    filteredCategoryProducts.value = 'all';
+    filteredSearchProducts.value = '';
   };
 
   watch(minPrice, (price) => {
     console.log(price);
+    filterProducts();
   });
 
   watch(maxPrice, (price) => {
     console.log(price);
+    filterProducts();
   });
 </script>
 
