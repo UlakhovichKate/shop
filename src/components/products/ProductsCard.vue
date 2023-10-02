@@ -16,6 +16,7 @@
     </div>
     <div class="card__footer">
       <base-button
+        @click="addToCart"
         button-class="card__button"
         button-text="Add to cart"
       />
@@ -26,6 +27,7 @@
 <script setup>
   import {computed} from 'vue';
   import BaseButton from '@/components/base/BaseButton.vue';
+  import {useCartStore} from '@/store/cart';
 
   const props = defineProps({
     product: {
@@ -35,6 +37,16 @@
   });
 
   const product = computed(() => props.product);
+  const cartStore = useCartStore();
+
+  const addToCart = () => {
+    cartStore.addCartItem({
+      id: product.value.id,
+      name: product.value.title,
+      price: product.value.price,
+      count: 1,
+    });
+  };
 </script>
 
 <style lang="scss" scoped>

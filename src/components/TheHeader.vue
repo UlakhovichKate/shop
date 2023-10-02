@@ -3,7 +3,11 @@
     <div class="header__content-wrapper">
       <h1 class="header__title"><a href="/">Shop</a></h1>
       <div class="header__nav">
-        <button class="header__basket">
+        <button
+          @click="openCart"
+          class="header__basket"
+        >
+          <span v-if="cartSum">{{ cartSum }} $</span>
           <img
             alt="cart"
             :src="shoppingCart"
@@ -16,12 +20,31 @@
         />
       </div>
     </div>
+    <cart-popup
+      v-if="isCartOpen"
+      @close-cart-popup="closeCartPopup"
+    />
   </div>
 </template>
 
 <script setup>
   import shoppingCart from '@/assets/shopping-cart-01.svg';
   import BaseButton from '@/components/base/BaseButton.vue';
+  import CartPopup from '@/components/cart/CartPopup.vue';
+  import {computed, ref} from 'vue';
+  import {useCartStore} from '@/store/cart';
+
+  const isCartOpen = ref(false);
+  const openCart = () => {
+    isCartOpen.value = true;
+  };
+
+  const closeCartPopup = () => {
+    isCartOpen.value = false;
+  };
+
+  const cartStore = useCartStore();
+  const cartSum = computed(() => cartStore.cartSum);
 </script>
 
 <style lang="scss" scoped>
@@ -61,6 +84,9 @@
     }
 
     &__basket {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       border: none;
       background-color: transparent;
       cursor: pointer;

@@ -3,6 +3,7 @@
     <the-header class="layout__header" />
     <div class="layout__main">
       <router-view />
+      <slot name="cart"></slot>
     </div>
   </div>
 </template>

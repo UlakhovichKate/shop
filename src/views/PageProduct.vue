@@ -21,6 +21,7 @@
           </div>
           <base-button
             v-if="product.stock > 0"
+            @click="addToCart"
             button-class="product__button"
             button-text="Add to cart"
           />
@@ -35,10 +36,12 @@
   import {getProduct} from '@/api/apiProducts';
   import {useRoute} from 'vue-router';
   import BaseButton from '@/components/base/BaseButton.vue';
+  import {useCartStore} from '@/store/cart';
 
   const route = useRoute();
 
   const product = ref([]);
+  const cartStore = useCartStore();
 
   const getOneProduct = async () => {
     try {
@@ -49,6 +52,15 @@
   };
 
   getOneProduct();
+
+  const addToCart = () => {
+    cartStore.addCartItem({
+      id: product.value.id,
+      name: product.value.title,
+      price: product.value.price,
+      count: 1,
+    });
+  };
 </script>
 
 <style lang="scss" scoped>
