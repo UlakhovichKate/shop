@@ -10,7 +10,10 @@
           />
         </button>
         <div class="header__user">User</div>
-        <button class="header__logout">Log out</button>
+        <base-button
+          button-class="header__logout"
+          button-text="Log out"
+        />
       </div>
     </div>
   </div>
@@ -18,6 +21,7 @@
 
 <script setup>
   import shoppingCart from '@/assets/shopping-cart-01.svg';
+  import BaseButton from '@/components/base/BaseButton.vue';
 </script>
 
 <style lang="scss" scoped>

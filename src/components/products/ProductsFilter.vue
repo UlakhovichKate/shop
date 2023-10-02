@@ -34,12 +34,11 @@
           />
         </div>
       </div>
-      <button
+      <base-button
         @click="resetFilters"
-        class="filter__reset"
-      >
-        Reset all filters
-      </button>
+        button-class="filter__reset"
+        button-text="Reset all filters"
+      />
     </div>
   </div>
 </template>
@@ -49,6 +48,7 @@
   import BaseSearch from '@/components/base/BaseSearch.vue';
   import BaseInputNumber from '@/components/base/BaseInputNumber.vue';
   import {ref, computed, watch} from 'vue';
+  import BaseButton from '@/components/base/BaseButton.vue';
 
   const props = defineProps({
     brands: {

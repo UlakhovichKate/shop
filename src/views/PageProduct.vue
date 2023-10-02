@@ -19,12 +19,11 @@
             <span v-if="product.stock > 0">In stock</span>
             <span v-else>Not in stock</span>
           </div>
-          <button
+          <base-button
             v-if="product.stock > 0"
-            class="product__button"
-          >
-            Add to cart
-          </button>
+            button-class="product__button"
+            button-text="Add to cart"
+          />
         </div>
       </div>
     </div>
@@ -35,6 +34,7 @@
   import {ref} from 'vue';
   import {getProduct} from '@/api/apiProducts';
   import {useRoute} from 'vue-router';
+  import BaseButton from '@/components/base/BaseButton.vue';
 
   const route = useRoute();
 

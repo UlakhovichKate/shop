@@ -15,13 +15,17 @@
       </div>
     </div>
     <div class="card__footer">
-      <button class="card__button">Add to cart</button>
+      <base-button
+        button-class="card__button"
+        button-text="Add to cart"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
   import {computed} from 'vue';
+  import BaseButton from '@/components/base/BaseButton.vue';
 
   const props = defineProps({
     product: {
