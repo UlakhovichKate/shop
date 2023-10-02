@@ -18,14 +18,14 @@
       <div class="filter__price price">
         <h3 class="price__title">Filter by price</h3>
         <div class="price__grid">
-          <base-input
+          <base-input-number
             v-model:value="minPriceFilter"
             :value="minPrice"
             @change="$emit('update:minPrice', Number($event.target.value))"
             type="min"
             title="Minimum price"
           />
-          <base-input
+          <base-input-number
             v-model:value="maxPriceFilter"
             :value="maxPrice"
             @change="$emit('update:maxPrice', Number($event.target.value))"
@@ -47,7 +47,7 @@
 <script setup>
   import BaseFilter from '@/components/base/BaseFilter.vue';
   import BaseSearch from '@/components/base/BaseSearch.vue';
-  import BaseInput from '@/components/base/BaseInput.vue';
+  import BaseInputNumber from '@/components/base/BaseInputNumber.vue';
   import {ref, computed, watch} from 'vue';
 
   const props = defineProps({

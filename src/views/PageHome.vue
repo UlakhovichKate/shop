@@ -62,8 +62,8 @@
   const filteredSearchProducts = ref('');
 
   const filterProducts = () => {
-    const category = filteredCategoryProducts.value === 'all' ? '' : filteredCategoryProducts.value;
-    const brand = filteredBrandProducts.value === 'all' ? '' : filteredBrandProducts.value;
+    const category = filteredCategoryProducts.value;
+    const brand = filteredBrandProducts.value;
     const search = filteredSearchProducts.value;
     const min = minPrice.value;
     const max = maxPrice.value;
@@ -71,8 +71,8 @@
 
     filteredProducts.value = products.value.filter(
       (product) =>
-        (brand ? product.brand === brand : product.brand.matchAll(regexp)) &&
-        (category ? product.category === category : product.category.matchAll(regexp)) &&
+        (brand === 'all' ? product.brand.matchAll(regexp) : product.brand === brand) &&
+        (category === 'all' ? product.category.matchAll(regexp) : product.category === category) &&
         product.title.toLowerCase().includes(search.toLowerCase()) &&
         product.price >= min &&
         product.price <= max,
@@ -106,15 +106,17 @@
     filteredBrandProducts.value = 'all';
     filteredCategoryProducts.value = 'all';
     filteredSearchProducts.value = '';
+    minPrice.value = getMinimumPrice();
+    maxPrice.value = getMaximumPrice();
   };
 
   watch(minPrice, (price) => {
-    console.log(price);
+    minPrice.value = price;
     filterProducts();
   });
 
   watch(maxPrice, (price) => {
-    console.log(price);
+    maxPrice.value = price;
     filterProducts();
   });
 </script>
