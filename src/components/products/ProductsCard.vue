@@ -8,7 +8,7 @@
       />
       <div class="card__body">
         <h2 class="card__title">
-          <a :href="`/products/` + product.id">{{ product.title }}</a>
+          <router-link :to="`/products/${product.id}`">{{ product.title }}</router-link>
         </h2>
         <div class="card__brand">by {{ product.brand }}</div>
         <div class="card__price">{{ product.price }} $</div>

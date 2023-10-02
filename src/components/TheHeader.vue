@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header__content-wrapper">
-      <h1 class="header__title"><a href="/">Shop</a></h1>
+      <h1 class="header__title"><router-link to="/">Shop</router-link></h1>
       <div class="header__nav">
         <button
           @click="openCart"
