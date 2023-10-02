@@ -1,18 +1,26 @@
 <template>
   <div class="page">
     <div class="page__content-wrapper">
-      <div
-        v-if="filteredProducts.length > 0"
-        class="products"
-      >
+      <div>
+        <products-sort
+          v-if="filteredProducts.length > 0"
+          @sort-by-min-price="sortByPrice(filteredProducts, 'min')"
+          @sort-by-max-price="sortByPrice(filteredProducts, 'max')"
+          @sort-by-title="sortByTitle(filteredProducts)"
+        />
         <div
-          v-for="product in filteredProducts"
-          :key="product.id"
+          v-if="filteredProducts.length > 0"
+          class="products"
         >
-          <product-card :product="product" />
+          <div
+            v-for="product in filteredProducts"
+            :key="product.id"
+          >
+            <product-card :product="product" />
+          </div>
         </div>
+        <div v-else>Nothing to show</div>
       </div>
-      <div v-else>Nothing to show</div>
       <products-filter
         :brands="brands"
         :categories="categories"
@@ -32,6 +40,7 @@
   import {getAllProducts} from '@/api/apiProducts';
   import ProductCard from '@/components/products/ProductsCard.vue';
   import ProductsFilter from '@/components/products/ProductsFilter.vue';
+  import ProductsSort from '@/components/products/ProductsSort.vue';
 
   const products = ref([]);
   const filteredProducts = ref([]);
@@ -42,6 +51,7 @@
   const getProducts = async () => {
     try {
       products.value = (await getAllProducts()).data.products;
+      sortByTitle(products.value);
       brands.value = [...new Set(products.value.map((el) => el.brand))];
       categories.value = [...new Set(products.value.map((el) => el.category))];
       filteredProducts.value = products.value;
@@ -119,6 +129,28 @@
     maxPrice.value = price;
     filterProducts();
   });
+
+  const sortByTitle = (items) => {
+    items.sort(function (a, b) {
+      if (a.title.toLowerCase() < b.title.toLowerCase()) {
+        return -1;
+      }
+      if (a.title.toLowerCase() > b.title.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
+  const sortByPrice = (items, type) => {
+    items.sort(function (a, b) {
+      if (type === 'min') {
+        return b.price - a.price;
+      } else {
+        return a.price - b.price;
+      }
+    });
+  };
 </script>
 
 <style lang="scss" scoped>

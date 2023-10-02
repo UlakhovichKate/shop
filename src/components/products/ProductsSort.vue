@@ -1,0 +1,42 @@
+<template>
+  <div class="sort">
+    <div class="sort__title">Sort by</div>
+    <select
+      v-model="selected"
+      @change="sortBy"
+    >
+      <option value="title">Title</option>
+      <option value="reduce">Price reduce</option>
+      <option value="increase">Price increase</option>
+    </select>
+  </div>
+</template>
+
+<script setup>
+  import {ref} from 'vue';
+
+  const emit = defineEmits(['sortByTitle', 'sortByMinPrice', 'sortByMaxPrice']);
+  const selected = ref('title');
+
+  const sortBy = () => {
+    switch (selected.value) {
+      case 'title':
+        return emit('sortByTitle');
+      case 'reduce':
+        return emit('sortByMinPrice');
+      case 'increase':
+        return emit('sortByMaxPrice');
+      default:
+        return emit('sortByTitle');
+    }
+  };
+</script>
+
+<style scoped lang="scss">
+  .sort {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+</style>
