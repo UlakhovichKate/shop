@@ -14,7 +14,10 @@
           <div class="product__description">{{ product.description }}</div>
           <div class="product__brand">Brand: {{ product.brand }}</div>
           <div class="product__category">Category: {{ product.category }}</div>
-          <div class="product__rating">Rating: {{ product.rating }}</div>
+          <product-rating
+            :rating="product.rating"
+            class="product__rating"
+          ></product-rating>
           <div class="product__availability">
             <span v-if="product.stock > 0">In stock</span>
             <span v-else>Not in stock</span>
@@ -37,6 +40,7 @@
   import {useRoute} from 'vue-router';
   import BaseButton from '@/components/base/BaseButton.vue';
   import {useCartStore} from '@/store/cart';
+  import ProductRating from '@/components/product/ProductRating.vue';
 
   const route = useRoute();
 
