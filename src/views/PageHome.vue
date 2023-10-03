@@ -4,9 +4,7 @@
       <div>
         <products-sort
           v-if="filteredProducts.length > 0"
-          @sort-by-min-price="sortByPrice(filteredProducts, 'min')"
-          @sort-by-max-price="sortByPrice(filteredProducts, 'max')"
-          @sort-by-title="sortByTitle(filteredProducts)"
+          @sort-by="sortBy"
         />
         <div
           v-if="filteredProducts.length > 0"
@@ -41,6 +39,8 @@
   import ProductCard from '@/components/products/ProductsCard.vue';
   import ProductsFilter from '@/components/products/ProductsFilter.vue';
   import ProductsSort from '@/components/products/ProductsSort.vue';
+  import sortByPrice from '@/helpers/sortByPrice';
+  import sortByTitle from '@/helpers/sortByTitle';
 
   const products = ref([]);
   const filteredProducts = ref([]);
@@ -87,6 +87,8 @@
         product.price >= min &&
         product.price <= max,
     );
+
+    sortBy(activeSortType.value);
   };
 
   const filterCategory = (category) => {
@@ -130,26 +132,18 @@
     filterProducts();
   });
 
-  const sortByTitle = (items) => {
-    items.sort(function (a, b) {
-      if (a.title.toLowerCase() < b.title.toLowerCase()) {
-        return -1;
-      }
-      if (a.title.toLowerCase() > b.title.toLowerCase()) {
-        return 1;
-      }
-      return 0;
-    });
-  };
+  const activeSortType = ref('title');
 
-  const sortByPrice = (items, type) => {
-    items.sort(function (a, b) {
-      if (type === 'min') {
-        return b.price - a.price;
-      } else {
-        return a.price - b.price;
-      }
-    });
+  const sortBy = (sortType) => {
+    activeSortType.value = sortType;
+
+    if (sortType === 'title') {
+      sortByTitle(filteredProducts.value);
+    } else if (sortType === 'minPrice') {
+      sortByPrice(filteredProducts.value, 'min');
+    } else {
+      sortByPrice(filteredProducts.value, 'max');
+    }
   };
 </script>
 

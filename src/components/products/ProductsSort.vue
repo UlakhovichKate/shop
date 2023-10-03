@@ -15,19 +15,19 @@
 <script setup>
   import {ref} from 'vue';
 
-  const emit = defineEmits(['sortByTitle', 'sortByMinPrice', 'sortByMaxPrice']);
+  const emit = defineEmits(['sortBy']);
   const selected = ref('title');
 
   const sortBy = () => {
     switch (selected.value) {
       case 'title':
-        return emit('sortByTitle');
+        return emit('sortBy', 'title');
       case 'reduce':
-        return emit('sortByMinPrice');
+        return emit('sortBy', 'minPrice');
       case 'increase':
-        return emit('sortByMaxPrice');
+        return emit('sortBy', 'maxPrice');
       default:
-        return emit('sortByTitle');
+        return emit('sortBy', 'title');
     }
   };
 </script>
