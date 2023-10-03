@@ -60,6 +60,10 @@
       padding: 20px;
       border-radius: 10px;
       background: #fff;
+
+      @media (max-width: 500px) {
+        max-width: 90vw;
+      }
     }
 
     &__close {
@@ -76,6 +80,10 @@
       &:hover {
         background: #ccc;
       }
+    }
+
+    &__summary {
+      margin-top: 20px;
     }
   }
 </style>

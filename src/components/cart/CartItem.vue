@@ -48,6 +48,10 @@
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
 
+    @media (max-width: 500px) {
+      grid-template-columns: 1fr 0.5fr 1fr 1fr;
+    }
+
     &__title {
       margin: 0;
       font-size: 16px;

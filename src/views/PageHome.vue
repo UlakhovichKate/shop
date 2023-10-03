@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page__content-wrapper">
-      <div>
+      <div class="page__inner">
         <products-sort
           v-if="filteredProducts.length > 0"
           @sort-by="sortBy"
@@ -158,7 +158,14 @@
         grid-template-columns: 1fr;
       }
     }
+
+    &__inner {
+      @media (max-width: 991px) {
+        order: 2;
+      }
+    }
   }
+
   .products {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -170,7 +177,6 @@
 
     @media (max-width: 991px) {
       grid-template-columns: repeat(2, 1fr);
-      order: 2;
     }
 
     @media (max-width: 500px) {
