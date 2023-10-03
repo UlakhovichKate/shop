@@ -15,6 +15,7 @@
         </button>
         <div class="header__user">User</div>
         <base-button
+          @click="logOut"
           button-class="header__logout"
           button-text="Log out"
         />
@@ -33,6 +34,7 @@
   import CartPopup from '@/components/cart/CartPopup.vue';
   import {computed, ref} from 'vue';
   import {useCartStore} from '@/store/cart';
+  import router from '@/router';
 
   const isCartOpen = ref(false);
   const openCart = () => {
@@ -45,6 +47,11 @@
 
   const cartStore = useCartStore();
   const cartSum = computed(() => cartStore.cartSum);
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    router.push('/login');
+  };
 </script>
 
 <style lang="scss" scoped>

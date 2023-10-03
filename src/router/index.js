@@ -4,6 +4,9 @@ const routes = [
   {
     path: '/',
     component: () => import('../layouts/LayoutDefault.vue'),
+    meta: {
+      requiresAuth: true, // Add meta field to indicate protected route
+    },
     children: [
       {
         path: '',
@@ -45,6 +48,19 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   linkActiveClass: 'active',
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      next();
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
