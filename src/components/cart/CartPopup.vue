@@ -3,7 +3,7 @@
     <div class="cart__content-wrapper">
       <base-button
         @click="closeCartPopup"
-        button-class="cart__close"
+        class="cart__close"
         button-text="x"
       />
       <h2 class="cart__title">Cart</h2>
@@ -70,12 +70,9 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      background: transparent;
       color: #000;
       border: none;
-      border-radius: 5px;
       font-size: 20px;
-      cursor: pointer;
 
       &:hover {
         background: #ccc;

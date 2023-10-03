@@ -25,7 +25,7 @@
           <base-button
             v-if="product.stock > 0"
             @click="addToCart"
-            button-class="product__button"
+            class="product__button"
             button-text="Add to cart"
           />
         </div>
@@ -90,14 +90,12 @@
     &__button {
       margin-top: 20px;
       padding: 10px 20px;
-      border: 1px solid #000;
       background-color: #000;
-      border-radius: 5px;
       color: #fff;
-      cursor: pointer;
+      border: none;
 
       &:hover {
-        opacity: 0.7;
+        background-color: green;
       }
     }
   }

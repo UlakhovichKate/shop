@@ -14,8 +14,8 @@
     ></cart-counter>
     <base-button
       @click="removeProduct(product)"
-      button-class="product__remove"
-      button-text="Remove from cart"
+      class="product__remove"
+      button-text="Remove"
     />
   </div>
 </template>
@@ -70,8 +70,7 @@
       background: #000;
       color: #fff;
       border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      font-size: 16px;
 
       &:hover {
         background: green;

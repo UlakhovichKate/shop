@@ -36,7 +36,7 @@
       </div>
       <base-button
         @click="resetFilters"
-        button-class="filter__reset"
+        class="filter__reset"
         button-text="Reset all filters"
       />
     </div>
@@ -126,15 +126,13 @@
       margin-top: 50px;
       padding: 10px 20px;
       border: 2px solid #000;
-      border-radius: 5px;
       background: #fff;
       color: #000;
       font-size: 16px;
-      transition: all 0.5s;
-      cursor: pointer;
 
       &:hover {
-        background: #ccc;
+        background: #000;
+        color: #fff;
       }
     }
   }

@@ -17,7 +17,7 @@
     <div class="card__footer">
       <base-button
         @click="addToCart"
-        button-class="card__button"
+        class="card__button"
         button-text="Add to cart"
       />
     </div>
@@ -97,9 +97,7 @@
       padding: 10px 20px;
       border: 1px solid #000;
       background-color: #000;
-      border-radius: 5px;
       color: #fff;
-      cursor: pointer;
 
       &:hover {
         opacity: 0.7;
