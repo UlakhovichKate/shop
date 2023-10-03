@@ -38,5 +38,6 @@ export const useCartStore = defineStore('cart', () => {
     cartSum,
     addCartItem,
     removeCartItem,
+    getTotalSum,
   };
 });

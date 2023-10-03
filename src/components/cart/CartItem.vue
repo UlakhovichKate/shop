@@ -1,14 +1,17 @@
 <template>
   <div class="product">
     <h3 class="product__title">
-      <a
-        :href="`/products/` + product.id"
+      <router-link
+        :to="`/products/${product.id}`"
         class="product__link"
-        >{{ product.name }}</a
+        >{{ product.name }}</router-link
       >
     </h3>
     <div class="product__price">{{ product.price }} $</div>
-    <div class="product__count">{{ product.count }}</div>
+    <cart-counter
+      :product="product"
+      class="product__count"
+    ></cart-counter>
     <base-button
       @click="removeProduct(product)"
       button-class="product__remove"
@@ -20,6 +23,7 @@
 <script setup>
   import BaseButton from '@/components/base/BaseButton.vue';
   import {useCartStore} from '@/store/cart';
+  import CartCounter from '@/components/cart/CartCounter.vue';
 
   const cartStore = useCartStore();
 
