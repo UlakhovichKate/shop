@@ -1,9 +1,9 @@
 <template>
   <div class="rating">
-    <div class="rating__title">Rating is: {{ rating }}</div>
+    <div class="rating__title">Rating is: {{ getFloorStars() }}</div>
     <div class="rating__stars">
       <div
-        v-for="(star, index) in floorStars(rating)"
+        v-for="(star, index) in floorStars"
         :key="index"
         class="rating__star"
       >
@@ -25,7 +25,7 @@
         </svg>
       </div>
       <svg
-        v-if="tailStars()"
+        v-if="tailStars"
         width="24"
         height="24"
         viewBox="0 0 24 24"
@@ -35,11 +35,11 @@
         <linearGradient id="Gradient1">
           <stop
             class="stop1"
-            :offset="`${tailStars()}%`"
+            :offset="`${tailStars}%`"
           />
           <stop
             class="stop2"
-            :offset="`${tailStars()}%`"
+            :offset="`${tailStars}%`"
           />
           <stop
             class="stop3"
@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-  import {computed} from 'vue';
+  import {computed, ref} from 'vue';
 
   const props = defineProps({
     rating: {
@@ -70,13 +70,17 @@
   });
 
   const rating = computed(() => props.rating);
+  const floorStars = ref(0);
+  const tailStars = ref(0);
 
-  const floorStars = (number) => {
-    return Math.floor(number);
+  const getFloorStars = () => {
+    floorStars.value = Math.floor(rating.value);
+    getTailStars();
+    return rating.value;
   };
 
-  const tailStars = () => {
-    return String(rating.value).split('.')[1];
+  const getTailStars = () => {
+    tailStars.value = String(rating.value).split('.')[1];
   };
 </script>
 
