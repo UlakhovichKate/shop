@@ -67,6 +67,10 @@
       grid-template-columns: 1fr 260px;
       grid-gap: 15px;
       align-items: center;
+
+      @media (max-width: 500px) {
+        grid-template-columns: 1fr 225px;
+      }
     }
 
     &__title {
@@ -88,6 +92,12 @@
       height: 60px;
       border: 1px solid #000;
       border-radius: 50%;
+
+      @media (max-width: 500px) {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+      }
     }
 
     &__basket {

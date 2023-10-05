@@ -73,6 +73,10 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 30px;
 
+    @media (max-width: 500px) {
+      grid-template-columns: 1fr;
+    }
+
     &__price {
       font-size: 20px;
       margin-bottom: 20px;

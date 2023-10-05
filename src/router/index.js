@@ -5,7 +5,7 @@ const routes = [
     path: '/',
     component: () => import('../layouts/LayoutDefault.vue'),
     meta: {
-      requiresAuth: true, // Add meta field to indicate protected route
+      requiresAuth: true,
     },
     children: [
       {
