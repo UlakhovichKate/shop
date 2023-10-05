@@ -2,12 +2,12 @@
   <div class="product">
     <h3 class="product__title">
       <router-link
-        :to="`/products/${product.id}`"
+        :to="`/products/${product.product.id}`"
         class="product__link"
-        >{{ product.name }}</router-link
+        >{{ product.product.title }}</router-link
       >
     </h3>
-    <div class="product__price">{{ product.price }} $</div>
+    <div class="product__price">{{ product.product.price }} $</div>
     <cart-counter
       :product="product"
       class="product__count"

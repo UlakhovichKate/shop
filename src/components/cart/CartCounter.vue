@@ -30,7 +30,7 @@
 
   const countDecrease = () => {
     if (props.product.count > 1) {
-      cartStore.cartItems.find((item) => item.id === props.product.id).count--;
+      cartStore.cartItems.find((item) => item.product.id === props.product.product.id).count--;
       cartStore.getTotalSum();
     } else {
       cartStore.removeCartItem(props.product);
@@ -38,7 +38,7 @@
   };
 
   const countIncrease = () => {
-    cartStore.cartItems.find((item) => item.id === props.product.id).count++;
+    cartStore.cartItems.find((item) => item.product.id === props.product.product.id).count++;
     cartStore.getTotalSum();
   };
 </script>

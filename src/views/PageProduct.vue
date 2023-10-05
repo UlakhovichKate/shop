@@ -36,7 +36,7 @@
 
 <script setup>
   import {ref} from 'vue';
-  import {getProduct} from '@/api/apiProducts';
+  import {getProductById} from '@/api/apiProducts';
   import {useRoute} from 'vue-router';
   import BaseButton from '@/components/base/BaseButton.vue';
   import {useCartStore} from '@/store/cart';
@@ -47,23 +47,18 @@
   const product = ref([]);
   const cartStore = useCartStore();
 
-  const getOneProduct = async () => {
+  const getProduct = async () => {
     try {
-      product.value = (await getProduct(route.params.productId)).data;
+      product.value = (await getProductById(route.params.productId)).data;
     } catch (e) {
       console.log(e);
     }
   };
 
-  getOneProduct();
+  getProduct();
 
   const addToCart = () => {
-    cartStore.addCartItem({
-      id: product.value.id,
-      name: product.value.title,
-      price: product.value.price,
-      count: 1,
-    });
+    cartStore.addCartItem(product.value);
   };
 </script>
 

@@ -40,12 +40,7 @@
   const cartStore = useCartStore();
 
   const addToCart = () => {
-    cartStore.addCartItem({
-      id: product.value.id,
-      name: product.value.title,
-      price: product.value.price,
-      count: 1,
-    });
+    cartStore.addCartItem(product.value);
   };
 </script>
 
