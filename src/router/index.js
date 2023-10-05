@@ -4,8 +4,12 @@ const routes = [
   {
     path: '/',
     component: () => import('../layouts/LayoutDefault.vue'),
-    meta: {
-      requiresAuth: true,
+    beforeEnter: (to, from, next) => {
+      if (isAuthenticated) {
+        next();
+      } else {
+        next('/login');
+      }
     },
     children: [
       {
@@ -50,17 +54,6 @@ const router = createRouter({
   linkActiveClass: 'active',
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    const token = localStorage.getItem('token');
-    if (token) {
-      next();
-    } else {
-      next('/login');
-    }
-  } else {
-    next();
-  }
-});
+const isAuthenticated = localStorage.getItem('token');
 
 export default router;

@@ -10,12 +10,11 @@
           v-if="filteredProducts.length > 0"
           class="products"
         >
-          <div
+          <product-card
             v-for="product in filteredProducts"
             :key="product.id"
-          >
-            <product-card :product="product" />
-          </div>
+            :product="product"
+          />
         </div>
         <div v-else>Nothing to show</div>
       </div>

@@ -30,11 +30,11 @@
 
 <script setup>
   import shoppingCart from '@/assets/shopping-cart-01.svg';
-  import BaseButton from '@/components/base/BaseButton.vue';
   import CartPopup from '@/components/cart/CartPopup.vue';
   import {computed, ref} from 'vue';
   import {useCartStore} from '@/store/cart';
   import router from '@/router';
+  import BaseButton from '@/components/base/BaseButton.vue';
 
   const isCartOpen = ref(false);
   const openCart = () => {

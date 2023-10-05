@@ -17,7 +17,7 @@
           <product-rating
             :rating="product.rating"
             class="product__rating"
-          ></product-rating>
+          />
           <div class="product__availability">
             <span v-if="product.stock > 0">In stock</span>
             <span v-else>Not in stock</span>
