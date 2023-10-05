@@ -1,6 +1,6 @@
 <template>
   <div class="base-filter">
-    <h3 class="base-filter__title">Filter by {{ name }}</h3>
+    <div class="base-filter__title">Filter by {{ name }}</div>
     <select
       :value="selected"
       @change="$emit('update:selected', $event.target.value)"
@@ -43,6 +43,12 @@
 <style lang="scss" scoped>
   .base-filter {
     margin-bottom: 40px;
+
+    &__title {
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 18px;
+    }
 
     &__select {
       width: 100%;

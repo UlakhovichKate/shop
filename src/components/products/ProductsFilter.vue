@@ -16,7 +16,7 @@
         name="title"
       />
       <div class="filter__price price">
-        <h3 class="price__title">Filter by price</h3>
+        <div class="price__title">Filter by price</div>
         <div class="price__grid">
           <base-input-number
             v-model:value="minPriceFilter"
@@ -113,7 +113,9 @@
 
     .price {
       &__title {
-        margin: 0;
+        margin-bottom: 10px;
+        font-weight: 600;
+        font-size: 18px;
       }
 
       &__grid {

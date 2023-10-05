@@ -1,6 +1,6 @@
 <template>
   <div class="base-input">
-    <h4 class="base-input__title">{{ title }}</h4>
+    <div class="base-input__title">{{ title }}</div>
     <input
       :value="value"
       @input="$emit('update:value', $event.target.value)"
