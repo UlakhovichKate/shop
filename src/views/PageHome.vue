@@ -1,22 +1,18 @@
 <template>
   <div class="page">
-    <div class="page__content-wrapper">
+    <div
+      v-if="filteredProducts.length > 0"
+      class="page__content-wrapper"
+    >
       <div class="page__inner">
-        <products-sort
-          v-if="filteredProducts.length > 0"
-          @sort-by="sortBy"
-        />
-        <div
-          v-if="filteredProducts.length > 0"
-          class="products"
-        >
+        <products-sort @sort-by="sortBy" />
+        <div class="products">
           <product-card
             v-for="product in filteredProducts"
             :key="product.id"
             :product="product"
           />
         </div>
-        <div v-else>Nothing to show</div>
       </div>
       <products-filter
         :brands="brands"
@@ -28,6 +24,12 @@
         @filter-search="filterSearch"
         @reset-filters="resetFilters"
       />
+    </div>
+    <div
+      v-else
+      class="page__inner"
+    >
+      Nothing to show
     </div>
   </div>
 </template>
