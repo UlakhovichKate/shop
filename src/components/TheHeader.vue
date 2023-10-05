@@ -16,9 +16,9 @@
         <div class="header__user">User</div>
         <base-button
           @click="logOut"
-          button-class="header__logout"
-          button-text="Log out"
-        />
+          class="header__logout"
+          >Log out</base-button
+        >
       </div>
     </div>
     <cart-popup

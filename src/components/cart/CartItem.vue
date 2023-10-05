@@ -15,8 +15,8 @@
     <base-button
       @click="removeProduct(product)"
       class="product__remove"
-      button-text="Remove"
-    />
+      >Remove</base-button
+    >
   </div>
 </template>
 

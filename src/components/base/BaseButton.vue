@@ -1,28 +1,8 @@
 <template>
-  <button
-    :type="buttonType"
-    :class="buttonClass"
-  >
-    {{ buttonText }}
-  </button>
+  <button class="button"><slot /></button>
 </template>
 
-<script setup>
-  defineProps({
-    buttonType: {
-      type: String,
-      default: 'button',
-    },
-    buttonClass: {
-      type: String,
-      default: 'button',
-    },
-    buttonText: {
-      type: String,
-      default: 'Submit',
-    },
-  });
-</script>
+<script setup></script>
 
 <style scoped lang="scss">
   .button {

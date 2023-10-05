@@ -18,8 +18,8 @@
       <base-button
         @click="addToCart"
         class="card__button"
-        button-text="Add to cart"
-      />
+        >Add to cart</base-button
+      >
     </div>
   </div>
 </template>

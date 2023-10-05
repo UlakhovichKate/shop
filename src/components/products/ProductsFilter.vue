@@ -37,8 +37,8 @@
       <base-button
         @click="resetFilters"
         class="filter__reset"
-        button-text="Reset all filters"
-      />
+        >Reset all filters</base-button
+      >
     </div>
   </div>
 </template>

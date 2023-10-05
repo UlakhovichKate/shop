@@ -24,10 +24,9 @@
           </div>
           <base-button
             @click="login"
-            button-type="button"
-            button-text="Log in"
             class="form__button"
-          />
+            >Log in</base-button
+          >
         </div>
       </div>
     </div>

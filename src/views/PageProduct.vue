@@ -26,8 +26,8 @@
             v-if="product.stock > 0"
             @click="addToCart"
             class="product__button"
-            button-text="Add to cart"
-          />
+            >Add to cart</base-button
+          >
         </div>
       </div>
     </div>

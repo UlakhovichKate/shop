@@ -4,8 +4,8 @@
       <base-button
         @click="closeCartPopup"
         class="cart__close"
-        button-text="x"
-      />
+        >x</base-button
+      >
       <h2 class="cart__title">Cart</h2>
       <div
         v-if="cartItems.length > 0"
