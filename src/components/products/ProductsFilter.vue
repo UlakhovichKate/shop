@@ -24,16 +24,16 @@
         <div class="price__grid">
           <base-input
             :min-value="minimumPrice"
-            :value="minimumPrice"
-            @change="$emit('update:minPrice', Number($event.target.value))"
+            :max-value="maximumPrice"
+            v-model:value="minPrice"
             type="number"
             title="Minimum price"
             class="price__input"
           />
           <base-input
+            :min-value="minimumPrice"
             :max-value="maximumPrice"
-            :value="maximumPrice"
-            @change="$emit('update:maxPrice', Number($event.target.value))"
+            v-model:value="maxPrice"
             type="number"
             title="Maximum price"
             class="price__input"
@@ -61,7 +61,7 @@
     },
   });
 
-  const emit = defineEmits(['filterBrand', 'filterCategory', 'filterSearch', 'resetFilters']);
+  const emit = defineEmits(['filters']);
 
   const products = computed(() => props.products);
   const categories = ref([]);
@@ -70,7 +70,9 @@
   const filterBrand = ref('all');
   const filterSearch = ref('');
   const minimumPrice = ref(0);
-  const maximumPrice = ref(null);
+  const maximumPrice = ref(0);
+  const minPrice = ref(null);
+  const maxPrice = ref(null);
 
   const getMinimumPrice = () => {
     return products.value.reduce((min, p) => (p.price < min ? p.price : min), products.value[0].price);
@@ -84,23 +86,52 @@
   minimumPrice.value = getMinimumPrice();
   maximumPrice.value = getMaximumPrice();
 
-  watch(filterCategory, (selectedCategory) => {
-    emit('filterCategory', selectedCategory);
+  watch(filterCategory, () => {
+    filterProducts();
   });
 
-  watch(filterBrand, (selectedBrand) => {
-    emit('filterBrand', selectedBrand);
+  watch(filterBrand, () => {
+    filterProducts();
   });
 
-  watch(filterSearch, (searchInput) => {
-    emit('filterSearch', searchInput);
+  watch(filterSearch, () => {
+    filterProducts();
+  });
+
+  watch(minPrice, () => {
+    filterProducts();
+  });
+
+  watch(maxPrice, () => {
+    filterProducts();
   });
 
   const resetFilters = () => {
     filterCategory.value = 'all';
     filterBrand.value = 'all';
     filterSearch.value = '';
-    emit('resetFilters');
+    minPrice.value = '';
+    maxPrice.value = '';
+    emit('filters', 'reset');
+  };
+
+  const filterProducts = () => {
+    const category = filterCategory.value;
+    const brand = filterBrand.value;
+    const search = filterSearch.value;
+    const min = minPrice.value;
+    const max = maxPrice.value;
+    const regexp = `A-Za-z0-9_-/`;
+
+    const productsList = products.value.filter(
+      (product) =>
+        (brand === 'all' ? product.brand.matchAll(regexp) : product.brand === brand) &&
+        (category === 'all' ? product.category.matchAll(regexp) : product.category === category) &&
+        product.title.toLowerCase().includes(search.toLowerCase()) &&
+        (min ? product.price >= Number(min) : true) &&
+        (max ? product.price <= Number(max) : true),
+    );
+    emit('filters', productsList);
   };
 </script>
 

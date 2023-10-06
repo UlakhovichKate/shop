@@ -23,17 +23,14 @@
       <products-filter
         v-if="products.length > 0"
         :products="products"
-        @filter-brand="filterBrand"
-        @filter-category="filterCategory"
-        @filter-search="filterSearch"
-        @reset-filters="resetFilters"
+        @filters="checkFilters"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-  import {ref, watch} from 'vue';
+  import {ref} from 'vue';
   import {getAllProducts} from '@/api/apiProducts';
   import ProductCard from '@/components/products/ProductsCard.vue';
   import ProductsFilter from '@/components/products/ProductsFilter.vue';
@@ -43,9 +40,6 @@
 
   const products = ref([]);
   const filteredProducts = ref([]);
-
-  const minPrice = ref(0);
-  const maxPrice = ref(0);
 
   const getProducts = async () => {
     try {
@@ -59,61 +53,15 @@
 
   getProducts();
 
-  const filteredBrandProducts = ref('all');
-  const filteredCategoryProducts = ref('all');
-  const filteredSearchProducts = ref('');
-
-  const filterProducts = () => {
-    const category = filteredCategoryProducts.value;
-    const brand = filteredBrandProducts.value;
-    const search = filteredSearchProducts.value;
-    const min = minPrice.value;
-    const max = maxPrice.value;
-    const regexp = `A-Za-z0-9_-/`;
-
-    filteredProducts.value = products.value.filter(
-      (product) =>
-        (brand === 'all' ? product.brand.matchAll(regexp) : product.brand === brand) &&
-        (category === 'all' ? product.category.matchAll(regexp) : product.category === category) &&
-        product.title.toLowerCase().includes(search.toLowerCase()) &&
-        product.price >= min &&
-        product.price <= max,
-    );
+  const checkFilters = (filter) => {
+    if (filter === 'reset') {
+      filteredProducts.value = products.value;
+    } else {
+      filteredProducts.value = filter;
+    }
 
     sortBy(activeSortType.value);
   };
-
-  const filterCategory = (category) => {
-    filteredCategoryProducts.value = category;
-    filterProducts();
-  };
-
-  const filterBrand = (brand) => {
-    filteredBrandProducts.value = brand;
-    filterProducts();
-  };
-
-  const filterSearch = (search) => {
-    filteredSearchProducts.value = search;
-    filterProducts();
-  };
-
-  const resetFilters = () => {
-    filteredProducts.value = products.value;
-    filteredBrandProducts.value = 'all';
-    filteredCategoryProducts.value = 'all';
-    filteredSearchProducts.value = '';
-  };
-
-  watch(minPrice, (price) => {
-    minPrice.value = price;
-    filterProducts();
-  });
-
-  watch(maxPrice, (price) => {
-    maxPrice.value = price;
-    filterProducts();
-  });
 
   const activeSortType = ref('title');
 
