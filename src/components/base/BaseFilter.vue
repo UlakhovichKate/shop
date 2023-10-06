@@ -42,8 +42,6 @@
 
 <style lang="scss" scoped>
   .base-filter {
-    margin-bottom: 40px;
-
     &__title {
       margin-bottom: 10px;
       font-weight: 600;

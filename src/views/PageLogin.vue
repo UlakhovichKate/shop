@@ -4,24 +4,20 @@
       <div class="login">
         <h1 class="login__title">Log in</h1>
         <div class="form">
-          <div>
-            <input
-              v-model="name"
-              type="text"
-              name="name"
-              class="form__input"
-              placeholder="your name"
-            />
-          </div>
-          <div>
-            <input
-              v-model="password"
-              type="password"
-              name="password"
-              class="form__input"
-              placeholder="your password"
-            />
-          </div>
+          <base-input
+            v-model:value="name"
+            type="text"
+            name="name"
+            class="form__input"
+            placeholder="your name"
+          />
+          <base-input
+            v-model:value="password"
+            type="password"
+            name="password"
+            class="form__input"
+            placeholder="your password"
+          />
           <base-button
             @click="login"
             class="form__button"
@@ -37,6 +33,7 @@
   import BaseButton from '@/components/base/BaseButton.vue';
   import {ref} from 'vue';
   import router from '@/router';
+  import BaseInput from '@/components/base/BaseInput.vue';
 
   const name = ref('');
   const password = ref('');
@@ -73,13 +70,6 @@
   .form {
     display: grid;
     grid-gap: 20px;
-
-    &__input {
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background: #fff;
-    }
 
     &__button {
       background: #000;

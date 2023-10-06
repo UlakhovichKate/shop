@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-    <div
-      v-if="filteredProducts.length > 0"
-      class="page__content-wrapper"
-    >
-      <div class="page__inner">
+    <div class="page__content-wrapper">
+      <div
+        v-if="filteredProducts.length > 0"
+        class="page__inner"
+      >
         <products-sort @sort-by="sortBy" />
         <div class="products">
           <product-card
@@ -14,22 +14,20 @@
           />
         </div>
       </div>
+      <div
+        v-else
+        class="page__inner"
+      >
+        Nothing to show
+      </div>
       <products-filter
-        :brands="brands"
-        :categories="categories"
-        v-model:min-price="minPrice"
-        v-model:max-price="maxPrice"
+        v-if="products.length > 0"
+        :products="products"
         @filter-brand="filterBrand"
         @filter-category="filterCategory"
         @filter-search="filterSearch"
         @reset-filters="resetFilters"
       />
-    </div>
-    <div
-      v-else
-      class="page__inner"
-    >
-      Nothing to show
     </div>
   </div>
 </template>
@@ -53,18 +51,11 @@
     try {
       products.value = (await getAllProducts()).data.products;
       sortByTitle(products.value);
-      brands.value = [...new Set(products.value.map((el) => el.brand))];
-      categories.value = [...new Set(products.value.map((el) => el.category))];
       filteredProducts.value = products.value;
-      minPrice.value = getMinimumPrice();
-      maxPrice.value = getMaximumPrice();
     } catch (e) {
       console.log(e);
     }
   };
-
-  const brands = ref([]);
-  const categories = ref([]);
 
   getProducts();
 
@@ -107,20 +98,11 @@
     filterProducts();
   };
 
-  const getMinimumPrice = () => {
-    return products.value.reduce((min, p) => (p.price < min ? p.price : min), products.value[0].price);
-  };
-  const getMaximumPrice = () => {
-    return products.value.reduce((max, p) => (p.price > max ? p.price : max), products.value[0].price);
-  };
-
   const resetFilters = () => {
     filteredProducts.value = products.value;
     filteredBrandProducts.value = 'all';
     filteredCategoryProducts.value = 'all';
     filteredSearchProducts.value = '';
-    minPrice.value = getMinimumPrice();
-    maxPrice.value = getMaximumPrice();
   };
 
   watch(minPrice, (price) => {

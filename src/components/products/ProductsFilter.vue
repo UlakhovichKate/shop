@@ -5,32 +5,38 @@
         v-model:selected="filterCategory"
         :elements="categories"
         name="category"
+        class="filter__block"
       />
       <base-filter
         v-model:selected="filterBrand"
         :elements="brands"
         name="brand"
+        class="filter__block"
       />
-      <base-search
-        v-model:search="filterSearch"
-        name="title"
+      <base-input
+        v-model:value="filterSearch"
+        type="search"
+        title="Search by title"
+        placeholder="Type something"
+        class="filter__block"
       />
       <div class="filter__price price">
-        <div class="price__title">Filter by price</div>
         <div class="price__grid">
-          <base-input-number
-            v-model:value="minPriceFilter"
-            :value="minPrice"
+          <base-input
+            :min-value="minimumPrice"
+            :value="minimumPrice"
             @change="$emit('update:minPrice', Number($event.target.value))"
-            type="min"
+            type="number"
             title="Minimum price"
+            class="price__input"
           />
-          <base-input-number
-            v-model:value="maxPriceFilter"
-            :value="maxPrice"
+          <base-input
+            :max-value="maximumPrice"
+            :value="maximumPrice"
             @change="$emit('update:maxPrice', Number($event.target.value))"
-            type="max"
+            type="number"
             title="Maximum price"
+            class="price__input"
           />
         </div>
       </div>
@@ -45,36 +51,38 @@
 
 <script setup>
   import BaseFilter from '@/components/base/BaseFilter.vue';
-  import BaseSearch from '@/components/base/BaseSearch.vue';
-  import BaseInputNumber from '@/components/base/BaseInputNumber.vue';
-  import {ref, computed, watch} from 'vue';
+  import {computed, ref, watch} from 'vue';
   import BaseButton from '@/components/base/BaseButton.vue';
+  import BaseInput from '@/components/base/BaseInput.vue';
 
   const props = defineProps({
-    brands: {
+    products: {
       type: Object,
-      required: true,
-    },
-    categories: {
-      type: Object,
-      required: true,
-    },
-    minPrice: {
-      type: Number,
-      required: true,
-    },
-    maxPrice: {
-      type: Number,
-      required: true,
     },
   });
 
-  const emit = defineEmits(['filterBrand', 'filterCategory', 'filterSearch', 'resetFilters', 'update:minPrice', 'update:maxPrice']);
+  const emit = defineEmits(['filterBrand', 'filterCategory', 'filterSearch', 'resetFilters']);
 
-  const categories = computed(() => props.categories);
-  const brands = computed(() => props.brands);
+  const products = computed(() => props.products);
+  const categories = ref([]);
+  const brands = ref([]);
   const filterCategory = ref('all');
   const filterBrand = ref('all');
+  const filterSearch = ref('');
+  const minimumPrice = ref(0);
+  const maximumPrice = ref(null);
+
+  const getMinimumPrice = () => {
+    return products.value.reduce((min, p) => (p.price < min ? p.price : min), products.value[0].price);
+  };
+  const getMaximumPrice = () => {
+    return products.value.reduce((max, p) => (p.price > max ? p.price : max), products.value[0].price);
+  };
+
+  brands.value = [...new Set(products.value.map((el) => el.brand))];
+  categories.value = [...new Set(products.value.map((el) => el.category))];
+  minimumPrice.value = getMinimumPrice();
+  maximumPrice.value = getMaximumPrice();
 
   watch(filterCategory, (selectedCategory) => {
     emit('filterCategory', selectedCategory);
@@ -84,14 +92,9 @@
     emit('filterBrand', selectedBrand);
   });
 
-  const filterSearch = ref('');
-
   watch(filterSearch, (searchInput) => {
     emit('filterSearch', searchInput);
   });
-
-  const minPriceFilter = computed(() => props.minPrice);
-  const maxPriceFilter = computed(() => props.maxPrice);
 
   const resetFilters = () => {
     filterCategory.value = 'all';
@@ -111,16 +114,15 @@
       top: 50px;
     }
 
-    .price {
-      &__title {
-        margin-bottom: 10px;
-        font-weight: 600;
-        font-size: 18px;
-      }
+    &__block {
+      margin-bottom: 40px;
+    }
 
+    .price {
       &__grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
       }
     }
 
