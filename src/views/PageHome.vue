@@ -35,8 +35,7 @@
   import ProductCard from '@/components/products/ProductsCard.vue';
   import ProductsFilter from '@/components/products/ProductsFilter.vue';
   import ProductsSort from '@/components/products/ProductsSort.vue';
-  import sortByPrice from '@/helpers/sortByPrice';
-  import sortByTitle from '@/helpers/sortByTitle';
+  import sortByAll from '@/components/products/helpers/sortBy';
 
   const products = ref([]);
   const filteredProducts = ref([]);
@@ -44,7 +43,7 @@
   const getProducts = async () => {
     try {
       products.value = (await getAllProducts()).data.products;
-      sortByTitle(products.value);
+      sortBy(products.value);
       filteredProducts.value = products.value;
     } catch (e) {
       console.log(e);
@@ -67,14 +66,7 @@
 
   const sortBy = (sortType) => {
     activeSortType.value = sortType;
-
-    if (sortType === 'title') {
-      sortByTitle(filteredProducts.value);
-    } else if (sortType === 'minPrice') {
-      sortByPrice(filteredProducts.value, 'min');
-    } else {
-      sortByPrice(filteredProducts.value, 'max');
-    }
+    sortByAll(filteredProducts.value, sortType);
   };
 </script>
 

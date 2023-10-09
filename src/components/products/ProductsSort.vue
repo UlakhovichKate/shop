@@ -6,8 +6,8 @@
       @change="sortBy"
     >
       <option value="title">Title</option>
-      <option value="reduce">Price reduce</option>
-      <option value="increase">Price increase</option>
+      <option value="minPrice">Price reduce</option>
+      <option value="maxPrice">Price increase</option>
     </select>
   </div>
 </template>
@@ -19,16 +19,7 @@
   const selected = ref('title');
 
   const sortBy = () => {
-    switch (selected.value) {
-      case 'title':
-        return emit('sortBy', 'title');
-      case 'reduce':
-        return emit('sortBy', 'minPrice');
-      case 'increase':
-        return emit('sortBy', 'maxPrice');
-      default:
-        return emit('sortBy', 'title');
-    }
+    return emit('sortBy', selected.value);
   };
 </script>
 
