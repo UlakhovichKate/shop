@@ -7,7 +7,7 @@
           @click="openCart"
           class="header__basket"
         >
-          <span v-if="cartSum">{{ cartSum }} $</span>
+          <span>{{ cartSum }} $</span>
           <img
             alt="cart"
             :src="shoppingCart"
