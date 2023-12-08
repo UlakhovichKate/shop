@@ -41,6 +41,7 @@
   const login = () => {
     if (name.value && password.value) {
       localStorage.setItem('token', '1111');
+      localStorage.setItem('userName', name.value);
       name.value = '';
       password.value = '';
       router.push('/');

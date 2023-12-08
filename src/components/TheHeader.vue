@@ -13,7 +13,7 @@
             :src="shoppingCart"
           />
         </button>
-        <div class="header__user">User</div>
+        <div class="header__user">{{ userName }}</div>
         <base-button
           @click="logOut"
           class="header__logout"
@@ -52,6 +52,8 @@
     localStorage.removeItem('token');
     router.push('/login');
   };
+
+  const userName = localStorage.getItem('userName');
 </script>
 
 <style lang="scss" scoped>
@@ -92,11 +94,11 @@
       height: 60px;
       border: 1px solid #000;
       border-radius: 50%;
+      font-size: clamp(8px, 2vw, 14px);
 
       @media (max-width: 500px) {
         width: 40px;
         height: 40px;
-        font-size: 14px;
       }
     }
 
