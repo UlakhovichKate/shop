@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-  import {ref} from 'vue';
+  import {ref, watch} from 'vue';
   import {getProductById} from '@/api/apiProducts';
   import {useRoute} from 'vue-router';
   import BaseButton from '@/components/base/BaseButton.vue';
@@ -60,6 +60,10 @@
   const addToCart = () => {
     cartStore.addCartItem(product.value);
   };
+
+  watch(route, () => {
+    getProduct();
+  });
 </script>
 
 <style lang="scss" scoped>
