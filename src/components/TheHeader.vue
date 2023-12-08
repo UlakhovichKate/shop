@@ -92,9 +92,11 @@
       align-items: center;
       width: 60px;
       height: 60px;
+      padding: 5px;
       border: 1px solid #000;
       border-radius: 50%;
       font-size: clamp(8px, 2vw, 14px);
+      text-align: center;
 
       @media (max-width: 500px) {
         width: 40px;
