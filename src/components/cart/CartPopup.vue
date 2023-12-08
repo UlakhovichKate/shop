@@ -15,6 +15,7 @@
           v-for="product in cartItems"
           :key="product.id"
           :product="product"
+          @close-popup="closeCartPopup"
         />
         <div class="cart__summary">Total: {{ cartSum }}</div>
       </div>

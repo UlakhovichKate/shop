@@ -4,6 +4,7 @@
       <router-link
         :to="`/products/${product.product.id}`"
         class="product__link"
+        @click="$emit('closePopup')"
         >{{ product.product.title }}</router-link
       >
     </h3>
