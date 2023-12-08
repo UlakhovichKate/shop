@@ -50,6 +50,7 @@
 
   const logOut = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     router.push('/login');
   };
 

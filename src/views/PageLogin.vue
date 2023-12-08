@@ -3,7 +3,7 @@
     <div class="page__content-wrapper">
       <div class="login">
         <h1 class="login__title">Log in</h1>
-        <div class="form">
+        <form @submit.prevent="login" class="form">
           <base-input
             v-model:value="name"
             type="text"
@@ -19,11 +19,11 @@
             placeholder="your password"
           />
           <base-button
-            @click="login"
+            type="submit"
             class="form__button"
             >Log in</base-button
           >
-        </div>
+        </form>
       </div>
     </div>
   </div>

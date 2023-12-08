@@ -1,8 +1,15 @@
 <template>
-  <button class="button"><slot /></button>
+  <button :type=type class="button"><slot /></button>
 </template>
 
-<script setup></script>
+<script setup>
+  defineProps({
+    type: {
+      type: String,
+      default: 'button',
+    },
+  });
+</script>
 
 <style scoped lang="scss">
   .button {
